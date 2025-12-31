@@ -44,8 +44,9 @@ const About = () => {
           >
             <div className="image-wrapper">
               <img
-                src="/asserts/images/picture-of-a-model-posing-with-the-dwali-body-cream.JPG"
+                src="/asserts/images/picture-of-a-model-posing-with-the-dwali-body-cream.webp"
                 alt="Model with D-Wali Product"
+                loading="lazy"
               />
               <div className="image-frame"></div>
             </div>

@@ -48,7 +48,7 @@ const VideoShowcase = () => {
           <div className="video-container">
             <video ref={videoRef} muted loop playsInline>
               <source
-                src="/asserts/Videos/vedio-1-of-someone-using-the-product.MP4"
+                src="/asserts/Videos/video-1-of-someone-using-the-product.mp4"
                 type="video/mp4"
               />
             </video>

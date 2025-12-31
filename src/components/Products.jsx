@@ -123,26 +123,30 @@ const Products = ({ setCursorVariant }) => {
               >
                 <div className="product-3d-face front">
                   <img
-                    src="/asserts/images/D-wali-anti-aging-hand-cream.JPG"
+                    src="/asserts/images/D-wali-anti-aging-hand-cream.webp"
                     alt="Product Front"
+                    loading="lazy"
                   />
                 </div>
                 <div className="product-3d-face back">
                   <img
-                    src="/asserts/images/D-wali-anti-aging-hand-cream.JPG"
+                    src="/asserts/images/D-wali-anti-aging-hand-cream.webp"
                     alt="Product Back"
+                    loading="lazy"
                   />
                 </div>
                 <div className="product-3d-face left">
                   <img
-                    src="/asserts/images/All-products-together.JPG"
+                    src="/asserts/images/All-products-together.webp"
                     alt="Product Left"
+                    loading="lazy"
                   />
                 </div>
                 <div className="product-3d-face right">
                   <img
-                    src="/asserts/images/All-products.JPG"
+                    src="/asserts/images/All-products.webp"
                     alt="Product Right"
+                    loading="lazy"
                   />
                 </div>
               </div>
@@ -219,22 +223,22 @@ const Products = ({ setCursorVariant }) => {
           <h3 className="gallery-title">Complete Collection</h3>
           <div className="gallery-grid">
             <GalleryItem
-              src="/asserts/images/All-products-together.JPG"
+              src="/asserts/images/All-products-together.webp"
               alt="All D-Wali Products"
               label="Full Collection"
             />
             <GalleryItem
-              src="/asserts/images/All-products.JPG"
+              src="/asserts/images/All-products.webp"
               alt="Product Range"
               label="Product Range"
             />
             <GalleryItem
-              src="/asserts/images/D-wali-anti-aging-hand-cream.JPG"
+              src="/asserts/images/D-wali-anti-aging-hand-cream.webp"
               alt="Anti-Aging Cream"
               label="Anti-Aging Cream"
             />
             <GalleryItem
-              src="/asserts/images/D-wali-body-lotion.jpg"
+              src="/asserts/images/D-wali-body-lotion.webp"
               alt="D-Wali Body Lotion"
               label="Body Lotion"
             />
@@ -268,7 +272,7 @@ const GalleryItem = ({ src, alt, label }) => {
         transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
       }}
     >
-      <img src={src} alt={alt} />
+      <img src={src} alt={alt} loading="lazy" decoding="async" />
       <div className="gallery-overlay">
         <span>{label}</span>
       </div>

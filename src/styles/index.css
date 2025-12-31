@@ -582,7 +582,7 @@ ol {
   z-index: 1001;
 }
 .nav-logo img {
-  height: 100px;
+  height: 70px;
   width: auto;
   transition: all var(--duration) var(--ease);
   filter: drop-shadow(0 0 25px rgba(212, 168, 83, 0.5));
@@ -591,7 +591,7 @@ ol {
   filter: brightness(0) invert(1) drop-shadow(0 0 30px rgba(255, 255, 255, 0.3));
 }
 .navbar.scrolled .nav-logo img {
-  height: 75px;
+  height: 55px;
 }
 .nav-menu {
   display: flex;
@@ -993,7 +993,7 @@ ol {
 
 @media (max-width: 480px) {
   .scroll-indicator {
-    bottom: 16px;
+    bottom: 12px;
   }
 
   .scroll-label {
@@ -1001,8 +1001,8 @@ ol {
   }
 
   .scroll-icon-wrapper {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
   }
 
   .scroll-icon-wrapper::before {
@@ -2171,10 +2171,10 @@ ol {
     padding: 0 16px;
   }
   .nav-logo img {
-    height: 55px;
+    height: 50px;
   }
   .navbar.scrolled .nav-logo img {
-    height: 45px;
+    height: 40px;
   }
   .nav-menu {
     position: fixed;
@@ -2538,10 +2538,10 @@ ol {
     padding: 0 12px;
   }
   .nav-logo img {
-    height: 48px;
+    height: 42px;
   }
   .navbar.scrolled .nav-logo img {
-    height: 40px;
+    height: 36px;
   }
   .nav-toggle {
     width: 40px;
@@ -2710,10 +2710,10 @@ ol {
     padding: 10px 0;
   }
   .nav-logo img {
-    height: 55px;
+    height: 50px;
   }
   .navbar.scrolled .nav-logo img {
-    height: 45px;
+    height: 40px;
   }
   .nav-toggle {
     width: 40px;
@@ -3025,10 +3025,10 @@ ol {
     padding: 0 16px;
   }
   .nav-logo img {
-    height: 50px;
+    height: 45px;
   }
   .navbar.scrolled .nav-logo img {
-    height: 42px;
+    height: 38px;
   }
   .nav-toggle {
     width: 36px;
@@ -3112,10 +3112,10 @@ ol {
     padding: 0 12px;
   }
   .nav-logo img {
-    height: 42px;
+    height: 38px;
   }
   .navbar.scrolled .nav-logo img {
-    height: 36px;
+    height: 32px;
   }
   .nav-toggle {
     width: 32px;
@@ -3206,6 +3206,7 @@ ol {
   .floating-product img {
     width: clamp(160px, 30vh, 220px);
   }
+  /* Hide scroll indicator only in landscape mode due to limited vertical space */
   .scroll-indicator {
     display: none;
   }

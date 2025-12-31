@@ -24,7 +24,7 @@ const Hero = ({ setCursorVariant }) => {
     <section className="hero" id="hero">
       <div className="hero-bg-video">
         <video autoPlay muted loop playsInline>
-          <source src="/asserts/Videos/Video-2.MP4" type="video/mp4" />
+          <source src="/asserts/Videos/video-2.mp4" type="video/mp4" />
         </video>
         <div className="hero-overlay"></div>
       </div>
@@ -105,8 +105,9 @@ const Hero = ({ setCursorVariant }) => {
         >
           <div className="floating-product">
             <img
-              src="/asserts/images/D-wali-anti-aging-hand-cream.JPG"
+              src="/asserts/images/D-wali-anti-aging-hand-cream.webp"
               alt="D-Wali Anti-Aging Cream"
+              loading="eager"
             />
             <div className="product-glow"></div>
           </div>

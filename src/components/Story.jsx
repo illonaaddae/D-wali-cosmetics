@@ -67,13 +67,18 @@ const Story = () => {
           >
             <div className="ceo-image-wrapper">
               <img
-                src="/asserts/images/Dickson-Wali-CEO -img.JPG"
+                src="/asserts/images/Dickson-Wali-CEO -img.webp"
                 alt="Dickson Wali - CEO"
                 className="ceo-main-img"
+                loading="lazy"
               />
               <div className="ceo-image-frame"></div>
               <div className="ceo-inset-img">
-                <img src="/asserts/images/CEO-image-2.JPG" alt="Dickson Wali" />
+                <img
+                  src="/asserts/images/CEO-image-2.webp"
+                  alt="Dickson Wali"
+                  loading="lazy"
+                />
               </div>
             </div>
           </motion.div>
