@@ -18,6 +18,7 @@ const Contact = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -29,21 +30,46 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(false);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "YOUR_ACCESS_KEY_HERE", // Replace with your Web3Forms access key
+          subject: `New D-Wali Order Inquiry from ${formData.name}`,
+          from_name: "D-Wali Website",
+          ...formData,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitted(true);
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          quantity: "",
+          message: "",
+        });
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        setError(true);
+        setTimeout(() => setError(false), 5000);
+      }
+    } catch (err) {
+      console.error("Form submission error:", err);
+      setError(true);
+      setTimeout(() => setError(false), 5000);
+    }
 
     setIsSubmitting(false);
-    setSubmitted(true);
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      quantity: "",
-      message: "",
-    });
-
-    setTimeout(() => setSubmitted(false), 5000);
   };
 
   return (
@@ -123,23 +149,23 @@ const Contact = () => {
           >
             {submitted && (
               <motion.div
-                style={{
-                  gridColumn: "1 / -1",
-                  background: "rgba(201, 169, 98, 0.2)",
-                  border: "1px solid var(--primary-gold)",
-                  borderRadius: "15px",
-                  padding: "20px",
-                  textAlign: "center",
-                  color: "var(--primary-gold)",
-                }}
+                className="form-message success"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <i
-                  className="fas fa-check-circle"
-                  style={{ fontSize: "2rem", marginBottom: "10px" }}
-                ></i>
+                <i className="fas fa-check-circle"></i>
                 <p>Thank you! Your message has been sent successfully.</p>
+              </motion.div>
+            )}
+
+            {error && (
+              <motion.div
+                className="form-message error"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <i className="fas fa-exclamation-circle"></i>
+                <p>Oops! Something went wrong. Please try again.</p>
               </motion.div>
             )}
 
