@@ -123,8 +123,10 @@ const StatCounter = ({ target, label, suffix = "", inView }) => {
 
   return (
     <div className="stat-item">
-      <span className="stat-number">{formatNumber(count)}</span>
-      <span className="stat-plus">{suffix || "+"}</span>
+      <span className="stat-value">
+        <span className="stat-number">{formatNumber(count)}</span>
+        <span className="stat-plus">{suffix || "+"}</span>
+      </span>
       <span className="stat-label">{label}</span>
     </div>
   );

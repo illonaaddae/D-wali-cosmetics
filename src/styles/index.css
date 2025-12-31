@@ -1501,6 +1501,7 @@ ol {
   align-items: center;
   justify-content: center;
   transition: background 0.4s var(--ease);
+  cursor: pointer;
 }
 .video-overlay.playing {
   background: transparent;
@@ -1508,7 +1509,8 @@ ol {
 .video-overlay.playing .play-btn {
   opacity: 0;
 }
-.video-overlay:hover .play-btn {
+.video-overlay:hover .play-btn,
+.video-overlay:active .play-btn {
   opacity: 1;
 }
 .play-btn {
@@ -1637,6 +1639,11 @@ ol {
   border-color: var(--gold);
   box-shadow: var(--shadow-gold);
 }
+.stat-value {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+}
 .stat-number {
   font-family: var(--font-display);
   font-size: clamp(32px, 5vw, 48px);
@@ -1648,6 +1655,7 @@ ol {
   font-family: var(--font-display);
   font-size: clamp(24px, 3vw, 36px);
   color: var(--gold);
+  margin-left: 2px;
 }
 .stat-label {
   display: block;
@@ -2656,12 +2664,17 @@ ol {
     padding: 20px 16px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    text-align: left;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+  }
+  .stat-value {
+    display: inline-flex;
+    align-items: baseline;
   }
   .stat-label {
     margin-top: 0;
-    margin-left: 16px;
+    margin-left: 0;
   }
   .ceo-inset-img {
     width: 90px;

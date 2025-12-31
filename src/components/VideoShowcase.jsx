@@ -52,12 +52,19 @@ const VideoShowcase = () => {
                 type="video/mp4"
               />
             </video>
-            <div className={`video-overlay ${isPlaying ? "playing" : ""}`}>
+            <div
+              className={`video-overlay ${isPlaying ? "playing" : ""}`}
+              onClick={handlePlayClick}
+            >
               <motion.button
                 className="play-btn"
-                onClick={handlePlayClick}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePlayClick();
+                }}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
+                aria-label={isPlaying ? "Pause video" : "Play video"}
               >
                 <i className={`fas ${isPlaying ? "fa-pause" : "fa-play"}`}></i>
               </motion.button>
