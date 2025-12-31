@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 const VideoShowcase = () => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [showControls, setShowControls] = useState(false);
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.3,
@@ -14,12 +15,11 @@ const VideoShowcase = () => {
     if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
-        videoRef.current.muted = true;
       } else {
-        videoRef.current.muted = false;
         videoRef.current.play();
       }
       setIsPlaying(!isPlaying);
+      setShowControls(true);
     }
   };
 
@@ -41,36 +41,37 @@ const VideoShowcase = () => {
 
         <motion.div
           className="video-frame"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={inView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
           <div className="video-container">
-            <video ref={videoRef} muted loop playsInline>
+            <video
+              ref={videoRef}
+              controls={showControls}
+              controlsList="nodownload"
+              playsInline
+              poster="/asserts/images/All-products-together.webp"
+              onPlay={() => {
+                setIsPlaying(true);
+                setShowControls(true);
+              }}
+              onPause={() => setIsPlaying(false)}
+            >
               <source
                 src="/asserts/Videos/video-1-of-someone-using-the-product.mp4"
                 type="video/mp4"
               />
+              Your browser does not support the video tag.
             </video>
-            <div
-              className={`video-overlay ${isPlaying ? "playing" : ""}`}
-              onClick={handlePlayClick}
-            >
-              <motion.button
-                className="play-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handlePlayClick();
-                }}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label={isPlaying ? "Pause video" : "Play video"}
-              >
-                <i className={`fas ${isPlaying ? "fa-pause" : "fa-play"}`}></i>
-              </motion.button>
-            </div>
+            {!showControls && (
+              <div className="video-overlay" onClick={handlePlayClick}>
+                <button className="play-btn" aria-label="Play video">
+                  <i className="fas fa-play"></i>
+                </button>
+              </div>
+            )}
           </div>
-          <div className="video-frame-border"></div>
         </motion.div>
       </div>
     </section>
