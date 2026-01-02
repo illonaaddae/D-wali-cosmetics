@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
+import { contactsApi } from "../lib/appwrite";
 
 const Contact = () => {
   const [ref, inView] = useInView({
@@ -33,36 +34,18 @@ const Contact = () => {
     setError(false);
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key: "YOUR_ACCESS_KEY_HERE", // Replace with your Web3Forms access key
-          subject: `New D-Wali Order Inquiry from ${formData.name}`,
-          from_name: "D-Wali Website",
-          ...formData,
-        }),
+      // Submit to Appwrite database
+      await contactsApi.create(formData);
+
+      setSubmitted(true);
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        quantity: "",
+        message: "",
       });
-
-      const result = await response.json();
-
-      if (result.success) {
-        setSubmitted(true);
-        setFormData({
-          name: "",
-          email: "",
-          company: "",
-          quantity: "",
-          message: "",
-        });
-        setTimeout(() => setSubmitted(false), 5000);
-      } else {
-        setError(true);
-        setTimeout(() => setError(false), 5000);
-      }
+      setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
       console.error("Form submission error:", err);
       setError(true);
