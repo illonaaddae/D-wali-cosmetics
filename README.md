@@ -6,7 +6,7 @@ A premium, high-performance React portfolio website for **D-Wali Cosmetics**, a 
 
 ---
 
-## ✨ Features
+##  Features
 
 - **Individual Product Pages** — Dedicated detail pages for each product with image galleries, ingredients, benefits, and CTAs
 - **Video Carousel** — Showcasing 7 client testimonial and product demo videos with thumbnails and navigation
@@ -22,7 +22,7 @@ A premium, high-performance React portfolio website for **D-Wali Cosmetics**, a 
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 | Technology | Purpose |
 |---|---|
@@ -80,7 +80,7 @@ src/
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -123,7 +123,7 @@ Converts all JPG/PNG images in `public/asserts/images/` to WebP format using Sha
 
 ---
 
-## 🎨 Products
+##  Products
 
 | Product | Route |
 |---|---|
@@ -133,7 +133,7 @@ Converts all JPG/PNG images in `public/asserts/images/` to WebP format using Sha
 
 ---
 
-## ⚡ Performance
+##  Performance
 
 The app is optimized with:
 
@@ -153,7 +153,7 @@ CSS: ~136 KB (34 KB gzipped)
 
 ---
 
-## 🔧 Environment Variables
+##  Environment Variables
 
 Create a `.env` file in the root directory:
 
