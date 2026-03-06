@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
+import StatCounter from "./StatCounter";
 
 const Story = () => {
   const [ref, inView] = useInView({
@@ -85,50 +85,6 @@ const Story = () => {
         </div>
       </div>
     </section>
-  );
-};
-
-const StatCounter = ({ target, label, suffix = "", inView }) => {
-  const [count, setCount] = useState(0);
-  const hasAnimated = useRef(false);
-
-  useEffect(() => {
-    if (inView && !hasAnimated.current) {
-      hasAnimated.current = true;
-      const duration = 2000;
-      const steps = 60;
-      const increment = target / steps;
-      let current = 0;
-
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-          setCount(target);
-          clearInterval(timer);
-        } else {
-          setCount(Math.floor(current));
-        }
-      }, duration / steps);
-
-      return () => clearInterval(timer);
-    }
-  }, [inView, target]);
-
-  const formatNumber = (num) => {
-    if (suffix === "M") {
-      return (num / 1000000).toFixed(num >= 1000000 ? 0 : 1);
-    }
-    return num.toLocaleString();
-  };
-
-  return (
-    <div className="stat-item">
-      <span className="stat-value">
-        <span className="stat-number">{formatNumber(count)}</span>
-        <span className="stat-plus">{suffix || "+"}</span>
-      </span>
-      <span className="stat-label">{label}</span>
-    </div>
   );
 };
 

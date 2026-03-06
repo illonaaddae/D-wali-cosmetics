@@ -1,20 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
 import { useInView } from "react-intersection-observer";
 import { motion, AnimatePresence } from "framer-motion";
+import { GALLERY_IMAGES, CAROUSEL_INTERVAL_MS } from "../constants";
 
-// Client gallery images
-const galleryImages = [
-  "/asserts/images/Clint-with-product-1.webp",
-  "/asserts/images/Clint-with-product-2.webp",
-  "/asserts/images/Clint-with-product-3.webp",
-  "/asserts/images/Clint-with-product-4.webp",
-  "/asserts/images/Clint-with-product-5.webp",
-  "/asserts/images/Clint-with-product-6.webp",
-  "/asserts/images/Clint-with-product-7.webp",
-  "/asserts/images/Clint-with-product-8.webp",
-];
-
-const ClientGallery = () => {
+const ClientGallery = memo(() => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -28,25 +17,28 @@ const ClientGallery = () => {
     if (isPaused) return;
 
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % galleryImages.length);
-    }, 3500);
+      setCurrentIndex((prev) => (prev + 1) % GALLERY_IMAGES.length);
+    }, CAROUSEL_INTERVAL_MS);
 
     return () => clearInterval(interval);
   }, [isPaused]);
 
-  const goToSlide = (index) => {
+  const goToSlide = useCallback((index) => {
     setCurrentIndex(index);
-  };
+  }, []);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % galleryImages.length);
-  };
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % GALLERY_IMAGES.length);
+  }, []);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrentIndex(
-      (prev) => (prev - 1 + galleryImages.length) % galleryImages.length
+      (prev) => (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length
     );
-  };
+  }, []);
+
+  const handleMouseEnter = useCallback(() => setIsPaused(true), []);
+  const handleMouseLeave = useCallback(() => setIsPaused(false), []);
 
   return (
     <section className="client-gallery" id="gallery" ref={ref}>
@@ -71,8 +63,8 @@ const ClientGallery = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
           {/* Main Image Display */}
           <div className="gallery-main">
@@ -88,7 +80,7 @@ const ClientGallery = () => {
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentIndex}
-                  src={galleryImages[currentIndex]}
+                  src={GALLERY_IMAGES[currentIndex]}
                   alt={`Happy customer ${currentIndex + 1} with D-Wali product`}
                   className="gallery-main-image"
                   initial={{ opacity: 0, scale: 1.05 }}
@@ -105,7 +97,7 @@ const ClientGallery = () => {
               <div className="gallery-counter">
                 <span>{currentIndex + 1}</span>
                 <span>/</span>
-                <span>{galleryImages.length}</span>
+                <span>{GALLERY_IMAGES.length}</span>
               </div>
             </div>
 
@@ -120,7 +112,7 @@ const ClientGallery = () => {
 
           {/* Thumbnail Strip */}
           <div className="gallery-thumbnails">
-            {galleryImages.map((image, index) => (
+            {GALLERY_IMAGES.map((image, index) => (
               <button
                 key={index}
                 className={`gallery-thumb ${
@@ -136,7 +128,7 @@ const ClientGallery = () => {
 
           {/* Progress dots for mobile */}
           <div className="gallery-dots">
-            {galleryImages.map((_, index) => (
+            {GALLERY_IMAGES.map((_, index) => (
               <button
                 key={index}
                 className={`gallery-dot ${
@@ -151,6 +143,8 @@ const ClientGallery = () => {
       </div>
     </section>
   );
-};
+});
+
+ClientGallery.displayName = "ClientGallery";
 
 export default ClientGallery;

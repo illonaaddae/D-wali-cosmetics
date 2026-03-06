@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
 import { reviewsApi } from "../lib/appwrite";
+import { PLACEHOLDER_REVIEWS, REVIEWS_PER_PAGE } from "../constants";
 
 const Reviews = ({ onOpenReviewModal }) => {
   const [ref, inView] = useInView({
@@ -12,7 +13,6 @@ const Reviews = ({ onOpenReviewModal }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
-  const reviewsPerPage = 3;
 
   // Fetch reviews from Appwrite
   useEffect(() => {
@@ -20,10 +20,9 @@ const Reviews = ({ onOpenReviewModal }) => {
       try {
         const data = await reviewsApi.getApproved();
         setReviews(data);
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
-        // Use placeholder reviews if fetch fails
-        setReviews(placeholderReviews);
+      } catch {
+        // Fallback to placeholder reviews if fetch fails
+        setReviews(PLACEHOLDER_REVIEWS);
       } finally {
         setLoading(false);
       }
@@ -32,80 +31,58 @@ const Reviews = ({ onOpenReviewModal }) => {
     fetchReviews();
   }, []);
 
-  // Placeholder reviews for display before real data
-  const placeholderReviews = [
-    {
-      $id: "1",
-      name: "Jennifer A.",
-      rating: 5,
-      title: "Life-changing skincare!",
-      review:
-        "I've tried countless anti-aging creams, but D-Wali is truly different. My skin feels softer, looks brighter, and the fine lines around my eyes have visibly reduced. Absolutely worth every penny!",
-      imageId: null,
-      createdAt: "2025-12-15T10:00:00.000Z",
-    },
-    {
-      $id: "2",
-      name: "Maria S.",
-      rating: 5,
-      title: "Best cream I've ever used",
-      review:
-        "After just two weeks of using D-Wali, I noticed a remarkable difference. My hands no longer look dry and aged. The cream absorbs quickly and leaves my skin feeling luxuriously smooth.",
-      imageId: null,
-      createdAt: "2025-12-20T14:30:00.000Z",
-    },
-    {
-      $id: "3",
-      name: "Patricia L.",
-      rating: 5,
-      title: "My daily essential",
-      review:
-        "D-Wali has become an essential part of my skincare routine. The moisturizing effect lasts all day, and I love the subtle, elegant fragrance. My friends keep asking what's my secret!",
-      imageId: null,
-      createdAt: "2025-12-28T09:15:00.000Z",
-    },
-  ];
-
-  const displayReviews = reviews.length > 0 ? reviews : placeholderReviews;
-  const totalPages = Math.ceil(displayReviews.length / reviewsPerPage);
-  const currentReviews = displayReviews.slice(
-    currentPage * reviewsPerPage,
-    (currentPage + 1) * reviewsPerPage
+  const displayReviews = useMemo(
+    () => (reviews.length > 0 ? reviews : PLACEHOLDER_REVIEWS),
+    [reviews]
   );
 
-  const nextPage = () => {
+  const totalPages = useMemo(
+    () => Math.ceil(displayReviews.length / REVIEWS_PER_PAGE),
+    [displayReviews.length]
+  );
+
+  const currentReviews = useMemo(
+    () =>
+      displayReviews.slice(
+        currentPage * REVIEWS_PER_PAGE,
+        (currentPage + 1) * REVIEWS_PER_PAGE
+      ),
+    [displayReviews, currentPage]
+  );
+
+  const nextPage = useCallback(() => {
     setCurrentPage((prev) => (prev + 1) % totalPages);
-  };
+  }, [totalPages]);
 
-  const prevPage = () => {
+  const prevPage = useCallback(() => {
     setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
-  };
+  }, [totalPages]);
 
-  const renderStars = (rating) => {
+  const renderStars = useCallback((rating) => {
     return [...Array(5)].map((_, index) => (
       <i
         key={index}
         className={`fas fa-star ${index < rating ? "filled" : ""}`}
       ></i>
     ));
-  };
+  }, []);
 
-  const getInitials = (name) => {
+  const getInitials = useCallback((name) => {
     return name
       .split(" ")
       .map((n) => n[0])
       .join("")
       .toUpperCase();
-  };
+  }, []);
 
-  const formatDate = (dateString) => {
+  const formatDate = useCallback((dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric",
     });
-  };
+  }, []);
 
   return (
     <section className="reviews" id="reviews" ref={ref}>

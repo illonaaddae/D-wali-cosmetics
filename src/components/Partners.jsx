@@ -1,34 +1,13 @@
+import { memo } from "react";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
+import { PARTNER_BENEFITS } from "../constants";
 
-const Partners = () => {
+const Partners = memo(() => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
-
-  const partnerBenefits = [
-    {
-      icon: "fa-boxes",
-      title: "Bulk Orders",
-      description: "Competitive pricing for wholesale quantities",
-    },
-    {
-      icon: "fa-truck",
-      title: "Global Shipping",
-      description: "Reliable delivery to destinations worldwide",
-    },
-    {
-      icon: "fa-handshake",
-      title: "Business Support",
-      description: "Dedicated account management and marketing materials",
-    },
-    {
-      icon: "fa-certificate",
-      title: "Quality Guaranteed",
-      description: "Premium products backed by our satisfaction guarantee",
-    },
-  ];
 
   return (
     <section className="partners" ref={ref}>
@@ -53,7 +32,7 @@ const Partners = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          {partnerBenefits.map((benefit, index) => (
+          {PARTNER_BENEFITS.map((benefit, index) => (
             <motion.div
               key={index}
               className="partner-card"
@@ -73,6 +52,8 @@ const Partners = () => {
       </div>
     </section>
   );
-};
+});
+
+Partners.displayName = "Partners";
 
 export default Partners;

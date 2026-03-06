@@ -1,39 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTheme } from "../context/ThemeContext";
+import useScrollPosition from "../hooks/useScrollPosition";
+import { NAV_SECTIONS } from "../constants";
 
 const Navbar = () => {
   const { isDark, toggleTheme } = useTheme();
-  const [scrolled, setScrolled] = useState(false);
+  const { scrolled, activeSection } = useScrollPosition(NAV_SECTIONS);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("hero");
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-
-      const sections = [
-        "hero",
-        "about",
-        "products",
-        "benefits",
-        "story",
-        "contact",
-      ];
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     if (menuOpen) {
@@ -44,7 +17,7 @@ const Navbar = () => {
     return () => document.body.classList.remove("menu-open");
   }, [menuOpen]);
 
-  const handleNavClick = (e, sectionId) => {
+  const handleNavClick = useCallback((e, sectionId) => {
     e.preventDefault();
 
     // Close menu first and remove body lock
@@ -66,10 +39,10 @@ const Navbar = () => {
         });
       }
     }, 100);
-  };
+  }, []);
 
-  const toggleMenu = () => setMenuOpen(!menuOpen);
-  const closeMenu = () => setMenuOpen(false);
+  const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   return (
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>

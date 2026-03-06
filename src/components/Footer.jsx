@@ -1,22 +1,29 @@
-import { useState } from "react";
+import { useState, useCallback, memo } from "react";
 
-const Footer = () => {
+const Footer = memo(() => {
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle newsletter subscription
-    setEmail("");
-    alert("Thank you for subscribing!");
-  };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      // Handle newsletter subscription
+      setEmail("");
+      alert("Thank you for subscribing!");
+    },
+    []
+  );
 
-  const handleNavClick = (e, sectionId) => {
+  const handleNavClick = useCallback((e, sectionId) => {
     e.preventDefault();
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
-  };
+  }, []);
+
+  const handleEmailChange = useCallback((e) => {
+    setEmail(e.target.value);
+  }, []);
 
   return (
     <footer className="footer">
@@ -87,7 +94,7 @@ const Footer = () => {
                 type="email"
                 placeholder="Your email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
                 required
               />
               <button type="submit">
@@ -106,6 +113,8 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = "Footer";
 
 export default Footer;

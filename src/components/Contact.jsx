@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
 import { contactsApi } from "../lib/appwrite";
@@ -21,39 +21,42 @@ const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError(false);
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      setIsSubmitting(true);
+      setError(false);
 
-    try {
-      // Submit to Appwrite database
-      await contactsApi.create(formData);
+      try {
+        // Submit to Appwrite database
+        await contactsApi.create(formData);
 
-      setSubmitted(true);
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        quantity: "",
-        message: "",
-      });
-      setTimeout(() => setSubmitted(false), 5000);
-    } catch (err) {
-      console.error("Form submission error:", err);
-      setError(true);
-      setTimeout(() => setError(false), 5000);
-    }
+        setSubmitted(true);
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          quantity: "",
+          message: "",
+        });
+        setTimeout(() => setSubmitted(false), 5000);
+      } catch {
+        setError(true);
+        setTimeout(() => setError(false), 5000);
+      }
 
-    setIsSubmitting(false);
-  };
+      setIsSubmitting(false);
+    },
+    [formData]
+  );
 
   return (
     <section className="contact" id="contact" ref={ref}>

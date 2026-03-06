@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo, useCallback } from "react";
 
-const CustomCursor = ({ variant }) => {
+const CustomCursor = memo(({ variant }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+
+  const handleMouseEnter = useCallback(() => setIsHovering(true), []);
+  const handleMouseLeave = useCallback(() => setIsHovering(false), []);
 
   useEffect(() => {
     const updateCursor = (e) => {
       setPosition({ x: e.clientX, y: e.clientY });
     };
 
-    const handleMouseEnter = () => setIsHovering(true);
-    const handleMouseLeave = () => setIsHovering(false);
-
-    window.addEventListener("mousemove", updateCursor);
+    window.addEventListener("mousemove", updateCursor, { passive: true });
 
     // Add hover effect to interactive elements
     const interactiveElements = document.querySelectorAll(
@@ -30,7 +30,7 @@ const CustomCursor = ({ variant }) => {
         el.removeEventListener("mouseleave", handleMouseLeave);
       });
     };
-  }, []);
+  }, [handleMouseEnter, handleMouseLeave]);
 
   return (
     <>
@@ -52,6 +52,8 @@ const CustomCursor = ({ variant }) => {
       />
     </>
   );
-};
+});
+
+CustomCursor.displayName = "CustomCursor";
 
 export default CustomCursor;

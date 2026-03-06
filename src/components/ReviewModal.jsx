@@ -1,4 +1,4 @@
- import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ReviewModal = ({ isOpen, onClose, onSubmitReview }) => {
@@ -16,22 +16,22 @@ const ReviewModal = ({ isOpen, onClose, onSubmitReview }) => {
   const [error, setError] = useState("");
   const fileInputRef = useRef(null);
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-  };
+  }, []);
 
-  const handleRatingChange = (rating) => {
+  const handleRatingChange = useCallback((rating) => {
     setFormData((prev) => ({
       ...prev,
       rating,
     }));
-  };
+  }, []);
 
-  const handleImageChange = (e) => {
+  const handleImageChange = useCallback((e) => {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
@@ -52,56 +52,61 @@ const ReviewModal = ({ isOpen, onClose, onSubmitReview }) => {
       reader.readAsDataURL(file);
       setError("");
     }
-  };
+  }, []);
 
-  const removeImage = () => {
+  const removeImage = useCallback(() => {
     setImagePreview(null);
     setImageFile(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
-  };
+  }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError("");
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      setIsSubmitting(true);
+      setError("");
 
-    try {
-      // Call the parent's submit function which will handle Appwrite
-      await onSubmitReview({
-        ...formData,
-        imageFile,
-      });
-
-      setSubmitted(true);
-
-      // Reset form after success
-      setTimeout(() => {
-        setFormData({
-          name: "",
-          email: "",
-          rating: 5,
-          title: "",
-          review: "",
+      try {
+        await onSubmitReview({
+          ...formData,
+          imageFile,
         });
-        setImagePreview(null);
-        setImageFile(null);
-        setSubmitted(false);
-        onClose();
-      }, 3000);
-    } catch (err) {
-      setError(err.message || "Failed to submit review. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
-  const handleBackdropClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
+        setSubmitted(true);
+
+        // Reset form after success
+        setTimeout(() => {
+          setFormData({
+            name: "",
+            email: "",
+            rating: 5,
+            title: "",
+            review: "",
+          });
+          setImagePreview(null);
+          setImageFile(null);
+          setSubmitted(false);
+          onClose();
+        }, 3000);
+      } catch (err) {
+        setError(err.message || "Failed to submit review. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+    [formData, imageFile, onSubmitReview, onClose]
+  );
+
+  const handleBackdropClick = useCallback(
+    (e) => {
+      if (e.target === e.currentTarget) {
+        onClose();
+      }
+    },
+    [onClose]
+  );
 
   return (
     <AnimatePresence>

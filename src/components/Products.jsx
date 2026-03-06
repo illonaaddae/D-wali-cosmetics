@@ -1,6 +1,9 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback, useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import GalleryItem from "./GalleryItem";
+import { PRODUCTS } from "../constants/products";
 
 const Products = ({ setCursorVariant }) => {
   const [ref, inView] = useInView({
@@ -23,56 +26,71 @@ const Products = ({ setCursorVariant }) => {
     }
   }, [autoRotate, isDragging]);
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = useCallback((e) => {
     setIsDragging(true);
     setAutoRotate(false);
     lastPos.current = { x: e.clientX, y: e.clientY };
-  };
+  }, []);
 
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    const deltaX = e.clientX - lastPos.current.x;
-    const deltaY = e.clientY - lastPos.current.y;
+  const handleMouseMove = useCallback((e) => {
+    if (!lastPos.current) return;
+    setIsDragging((dragging) => {
+      if (!dragging) return false;
+      const deltaX = e.clientX - lastPos.current.x;
+      const deltaY = e.clientY - lastPos.current.y;
 
-    setRotation((prev) => ({
-      x: prev.x + deltaY * 0.5,
-      y: prev.y + deltaX * 0.5,
-    }));
+      setRotation((prev) => ({
+        x: prev.x + deltaY * 0.5,
+        y: prev.y + deltaX * 0.5,
+      }));
 
-    lastPos.current = { x: e.clientX, y: e.clientY };
-  };
+      lastPos.current = { x: e.clientX, y: e.clientY };
+      return true;
+    });
+  }, []);
 
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false);
     // Resume auto-rotate after 3 seconds of inactivity
     setTimeout(() => setAutoRotate(true), 3000);
-  };
+  }, []);
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = useCallback((e) => {
     setIsDragging(true);
     setAutoRotate(false);
     const touch = e.touches[0];
     lastPos.current = { x: touch.clientX, y: touch.clientY };
-  };
+  }, []);
 
-  const handleTouchMove = (e) => {
-    if (!isDragging) return;
-    const touch = e.touches[0];
-    const deltaX = touch.clientX - lastPos.current.x;
-    const deltaY = touch.clientY - lastPos.current.y;
+  const handleTouchMove = useCallback((e) => {
+    if (!lastPos.current) return;
+    setIsDragging((dragging) => {
+      if (!dragging) return false;
+      const touch = e.touches[0];
+      const deltaX = touch.clientX - lastPos.current.x;
+      const deltaY = touch.clientY - lastPos.current.y;
 
-    setRotation((prev) => ({
-      x: prev.x + deltaY * 0.5,
-      y: prev.y + deltaX * 0.5,
-    }));
+      setRotation((prev) => ({
+        x: prev.x + deltaY * 0.5,
+        y: prev.y + deltaX * 0.5,
+      }));
 
-    lastPos.current = { x: touch.clientX, y: touch.clientY };
-  };
+      lastPos.current = { x: touch.clientX, y: touch.clientY };
+      return true;
+    });
+  }, []);
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
     setTimeout(() => setAutoRotate(true), 3000);
-  };
+  }, []);
+
+  const rotationStyle = useMemo(
+    () => ({
+      transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+    }),
+    [rotation.x, rotation.y]
+  );
 
   return (
     <section className="products" id="products" ref={ref}>
@@ -117,9 +135,7 @@ const Products = ({ setCursorVariant }) => {
               <div
                 className="product-3d-wrapper"
                 ref={productRef}
-                style={{
-                  transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
-                }}
+                style={rotationStyle}
               >
                 <div className="product-3d-face front">
                   <img
@@ -213,7 +229,7 @@ const Products = ({ setCursorVariant }) => {
           </div>
         </motion.div>
 
-        {/* Product Gallery */}
+        {/* Product Collection */}
         <motion.div
           className="product-gallery"
           initial={{ opacity: 0, y: 50 }}
@@ -221,62 +237,42 @@ const Products = ({ setCursorVariant }) => {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           <h3 className="gallery-title">Complete Collection</h3>
-          <div className="gallery-grid">
-            <GalleryItem
-              src="/asserts/images/All-products-together.webp"
-              alt="All D-Wali Products"
-              label="Full Collection"
-            />
-            <GalleryItem
-              src="/asserts/images/All-products.webp"
-              alt="Product Range"
-              label="Product Range"
-            />
-            <GalleryItem
-              src="/asserts/images/D-wali-anti-aging-hand-cream.webp"
-              alt="Anti-Aging Cream"
-              label="Anti-Aging Cream"
-            />
-            <GalleryItem
-              src="/asserts/images/D-wali-body-lotion.webp"
-              alt="D-Wali Body Lotion"
-              label="Body Lotion"
-            />
+          <div className="product-cards-grid">
+            {PRODUCTS.map((product, index) => (
+              <motion.div
+                key={product.id}
+                className="product-card"
+                initial={{ opacity: 0, y: 40 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.5 + index * 0.15 }}
+                whileHover={{ y: -8 }}
+              >
+                <div className="product-card-image">
+                  <img
+                    src={product.heroImage}
+                    alt={product.name}
+                    loading="lazy"
+                  />
+                  <div className="product-card-overlay">
+                    <Link
+                      to={`/products/${product.slug}`}
+                      className="btn btn-primary btn-sm"
+                    >
+                      <span>View Details</span>
+                      <i className="fas fa-arrow-right"></i>
+                    </Link>
+                  </div>
+                </div>
+                <div className="product-card-info">
+                  <h4>{product.name}</h4>
+                  <p>{product.shortDescription}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </div>
     </section>
-  );
-};
-
-const GalleryItem = ({ src, alt, label }) => {
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: y * 10, y: -x * 10 });
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-  };
-
-  return (
-    <div
-      className="gallery-item"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-      }}
-    >
-      <img src={src} alt={alt} loading="lazy" decoding="async" />
-      <div className="gallery-overlay">
-        <span>{label}</span>
-      </div>
-    </div>
   );
 };
 

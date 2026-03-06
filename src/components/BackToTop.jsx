@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const BackToTop = () => {
+const BackToTop = memo(() => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -9,13 +9,13 @@ const BackToTop = () => {
       setVisible(window.scrollY > 500);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToTop = () => {
+  const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  }, []);
 
   return (
     <AnimatePresence>
@@ -34,6 +34,8 @@ const BackToTop = () => {
       )}
     </AnimatePresence>
   );
-};
+});
+
+BackToTop.displayName = "BackToTop";
 
 export default BackToTop;
