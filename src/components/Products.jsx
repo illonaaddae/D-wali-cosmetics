@@ -251,7 +251,7 @@ const Products = ({ setCursorVariant }) => {
               link="/products/full-collection"
             />
             <GalleryItem
-              src="/asserts/images/Dwali-hand-&-Body-Lotion.webp"
+              src="/asserts/images/D-wali-anti-aging-hand-cream.webp"
               alt="Anti-Aging Hand & Body Cream"
               label="Anti-Aging Cream"
               link="/products/anti-aging-hand-body-cream"
