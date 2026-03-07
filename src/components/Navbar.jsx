@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import useScrollPosition from "../hooks/useScrollPosition";
 import { NAV_SECTIONS } from "../constants";
@@ -7,6 +8,8 @@ const Navbar = () => {
   const { isDark, toggleTheme } = useTheme();
   const { scrolled, activeSection } = useScrollPosition(NAV_SECTIONS);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (menuOpen) {
@@ -17,29 +20,40 @@ const Navbar = () => {
     return () => document.body.classList.remove("menu-open");
   }, [menuOpen]);
 
-  const handleNavClick = useCallback((e, sectionId) => {
-    e.preventDefault();
+  const scrollToSection = useCallback((sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const navHeight = 80;
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - navHeight;
 
-    // Close menu first and remove body lock
-    setMenuOpen(false);
-    document.body.classList.remove("menu-open");
-
-    // Small delay to allow body to unlock before scrolling
-    setTimeout(() => {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        const navHeight = 80; // Account for fixed navbar
-        const elementPosition =
-          element.getBoundingClientRect().top + window.pageYOffset;
-        const offsetPosition = elementPosition - navHeight;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
-      }
-    }, 100);
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
   }, []);
+
+  const handleNavClick = useCallback(
+    (e, sectionId) => {
+      e.preventDefault();
+
+      // Close menu first
+      setMenuOpen(false);
+      document.body.classList.remove("menu-open");
+
+      // If on home page, scroll directly
+      if (location.pathname === "/") {
+        setTimeout(() => scrollToSection(sectionId), 100);
+      } else {
+        // Navigate to home first, then scroll to section
+        navigate("/");
+        setTimeout(() => scrollToSection(sectionId), 400);
+      }
+    },
+    [location.pathname, navigate, scrollToSection]
+  );
 
   const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);

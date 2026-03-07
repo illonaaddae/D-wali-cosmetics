@@ -3065,15 +3065,12 @@ ol {
     max-width: 380px;
   }
   .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: auto;
-  }
-  .gallery-grid > * {
-    height: 240px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 300px 240px 240px;
+    gap: 16px;
   }
   .gallery-grid > :nth-child(1) {
-    grid-column: span 2;
-    height: 320px;
+    grid-column: span 3;
   }
 
   /* Story Section */
@@ -3169,13 +3166,12 @@ ol {
 
   /* Products Gallery */
   .gallery-grid {
-    gap: 16px;
-  }
-  .gallery-grid > * {
-    height: 200px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 240px 200px 200px;
+    gap: 12px;
   }
   .gallery-grid > :nth-child(1) {
-    height: 260px;
+    grid-column: span 2;
   }
 
   /* Benefits & Partners */

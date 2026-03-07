@@ -7,11 +7,11 @@ export const PRODUCTS = [
     id: "full-collection",
     slug: "full-collection",
     name: "The Full Collection",
-    tagline: "Complete Premium Skincare — Everything Your Skin Needs",
+    tagline: "Complete Premium Skincare for Everything Your Skin Needs",
     shortDescription:
       "Experience the full range of D-Wali premium skincare products designed for radiant, healthy skin.",
     fullDescription:
-      "The D-Wali Full Collection brings together our three signature products — the Anti-Aging Hand & Body Cream, Anti-Fungal Cuticle & Body Oil, and Liquid Gold Shower Gel. Each product is carefully crafted with premium ingredients including rooibos extract, natural essential oils, and powerful antioxidants. Together, they form a complete skincare routine that cleanses, nourishes, heals, and protects your skin from head to toe. Whether you're combating signs of aging, treating fungal concerns, or simply indulging in luxury daily care, this collection has you covered.",
+      "The D-Wali Full Collection brings together our three signature products: the Anti-Aging Hand & Body Cream, Anti-Fungal Cuticle & Body Oil, and Liquid Gold Shower Gel. Each product is carefully crafted with premium ingredients including rooibos extract, natural essential oils, and powerful antioxidants. Together, they form a complete skincare routine that cleanses, nourishes, heals, and protects your skin from head to toe. Whether you're combating signs of aging, treating fungal concerns, or simply indulging in luxury daily care, this collection has you covered.",
     ingredients:
       "Hand & Body Cream: Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Sodium Chloride, Benzyl Alcohol, Methylchlorisothiazolinone, Methylisothiazolinone, Rooibos Extract, Parfum. • Cuticle & Body Oil: Castor Oil, Olive Oil, Coconut Oil, Tea Tree, Peppermint, Lavender, Frankincense. • Shower Gel: Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Sodium Chloride, Benzyl Alcohol, Methylchlorisothiazolinone, Methylisothiazolinone, Rooibos Extract, Parfum.",
     heroImage: "/asserts/images/All-products-together.webp",
@@ -27,7 +27,7 @@ export const PRODUCTS = [
       {
         icon: "fa-gem",
         title: "Complete Routine",
-        description: "Cleanse, nourish, and protect — all in one collection",
+        description: "Cleanse, nourish, and protect, all in one collection",
       },
       {
         icon: "fa-magic",
@@ -107,8 +107,7 @@ export const PRODUCTS = [
     heroImage: "/asserts/images/dwali-oil.webp",
     gallery: [
       "/asserts/images/dwali-oil.webp",
-      "/asserts/images/All-products-together.webp",
-      "/asserts/images/All-products.webp",
+      "/asserts/images/oil-img-2.webp",
     ],
     benefits: [
       {
@@ -142,15 +141,14 @@ export const PRODUCTS = [
     shortDescription:
       "A premium shower gel infused with rooibos extract for a radiant cleanse.",
     fullDescription:
-      "D-Wali Liquid Gold Shower Gel transforms your daily shower into a spa-like indulgence. This rich, lathering formula gently cleanses while infusing your skin with rooibos extract — one of nature's most powerful antioxidants. The golden formula leaves your skin feeling refreshed, hydrated, and radiantly clean. Its sophisticated fragrance lingers on the skin, making every shower a luxurious experience.",
+      "D-Wali Liquid Gold Shower Gel transforms your daily shower into a spa-like indulgence. This rich, lathering formula gently cleanses while infusing your skin with rooibos extract, one of nature's most powerful antioxidants. The golden formula leaves your skin feeling refreshed, hydrated, and radiantly clean. Its sophisticated fragrance lingers on the skin, making every shower a luxurious experience.",
     ingredients:
       "Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Sodium Chloride, Benzyl Alcohol, Methylchlorisothiazolinone, Methylisothiazolinone, Rooibos Extract, Parfum.",
     heroImage: "/asserts/images/dwali-shower-gel.webp",
     gallery: [
       "/asserts/images/dwali-shower-gel.webp",
-      "/asserts/images/D-wali-body-lotion.webp",
-      "/asserts/images/Dwali-hand-&-Body-Lotion.webp",
-      "/asserts/images/All-products-together.webp",
+      "/asserts/images/shower-gel-img-2.webp",
+      "/asserts/images/shower-gel-img-3.webp",
     ],
     benefits: [
       {
