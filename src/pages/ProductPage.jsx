@@ -34,9 +34,9 @@ const ProductPage = () => {
     );
   }, [product]);
 
-  // Get other products for the "More Products" section
+  // Get other individual products for the "More Products" section (exclude collections)
   const otherProducts = useMemo(
-    () => PRODUCTS.filter((p) => p.slug !== slug),
+    () => PRODUCTS.filter((p) => p.slug !== slug && !p.isCollection),
     [slug]
   );
 
@@ -170,9 +170,19 @@ const ProductPage = () => {
                       <span>Inquire Now</span>
                       <i className="fas fa-arrow-right"></i>
                     </a>
-                    <Link to="/" className="btn btn-secondary">
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => {
+                        navigate("/");
+                        setTimeout(() => {
+                          document
+                            .getElementById("products")
+                            ?.scrollIntoView({ behavior: "smooth" });
+                        }, 300);
+                      }}
+                    >
                       <span>All Products</span>
-                    </Link>
+                    </button>
                   </div>
                 </motion.div>
               </div>

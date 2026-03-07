@@ -4,6 +4,51 @@
 
 export const PRODUCTS = [
   {
+    id: "full-collection",
+    slug: "full-collection",
+    name: "The Full Collection",
+    tagline: "Complete Premium Skincare — Everything Your Skin Needs",
+    shortDescription:
+      "Experience the full range of D-Wali premium skincare products designed for radiant, healthy skin.",
+    fullDescription:
+      "The D-Wali Full Collection brings together our three signature products — the Anti-Aging Hand & Body Cream, Anti-Fungal Cuticle & Body Oil, and Liquid Gold Shower Gel. Each product is carefully crafted with premium ingredients including rooibos extract, natural essential oils, and powerful antioxidants. Together, they form a complete skincare routine that cleanses, nourishes, heals, and protects your skin from head to toe. Whether you're combating signs of aging, treating fungal concerns, or simply indulging in luxury daily care, this collection has you covered.",
+    ingredients:
+      "Hand & Body Cream: Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Sodium Chloride, Benzyl Alcohol, Methylchlorisothiazolinone, Methylisothiazolinone, Rooibos Extract, Parfum. • Cuticle & Body Oil: Castor Oil, Olive Oil, Coconut Oil, Tea Tree, Peppermint, Lavender, Frankincense. • Shower Gel: Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Sodium Chloride, Benzyl Alcohol, Methylchlorisothiazolinone, Methylisothiazolinone, Rooibos Extract, Parfum.",
+    heroImage: "/asserts/images/All-products-together.webp",
+    gallery: [
+      "/asserts/images/All-products-together.webp",
+      "/asserts/images/All-products.webp",
+      "/asserts/images/Dwali-hand-&-Body-Lotion.webp",
+      "/asserts/images/dwali-oil.webp",
+      "/asserts/images/dwali-shower-gel.webp",
+      "/asserts/images/D-wali-body-lotion.webp",
+    ],
+    benefits: [
+      {
+        icon: "fa-gem",
+        title: "Complete Routine",
+        description: "Cleanse, nourish, and protect — all in one collection",
+      },
+      {
+        icon: "fa-magic",
+        title: "Anti-Aging Power",
+        description: "Combat fine lines with our signature hand & body cream",
+      },
+      {
+        icon: "fa-shield-virus",
+        title: "Anti-Fungal Care",
+        description: "Natural oil blend for healthy skin and nails",
+      },
+      {
+        icon: "fa-shower",
+        title: "Luxury Cleansing",
+        description: "Rooibos-infused shower gel for radiant clean",
+      },
+    ],
+    color: "#d4a853",
+    isCollection: true,
+  },
+  {
     id: "anti-aging-hand-body-cream",
     slug: "anti-aging-hand-body-cream",
     name: "Anti-Aging Hand & Body Cream",

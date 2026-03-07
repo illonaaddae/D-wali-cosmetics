@@ -237,38 +237,43 @@ const Products = ({ setCursorVariant }) => {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           <h3 className="gallery-title">Complete Collection</h3>
-          <div className="product-cards-grid">
-            {PRODUCTS.map((product, index) => (
-              <motion.div
-                key={product.id}
-                className="product-card"
-                initial={{ opacity: 0, y: 40 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.5 + index * 0.15 }}
-                whileHover={{ y: -8 }}
-              >
-                <div className="product-card-image">
-                  <img
-                    src={product.heroImage}
-                    alt={product.name}
-                    loading="lazy"
-                  />
-                  <div className="product-card-overlay">
-                    <Link
-                      to={`/products/${product.slug}`}
-                      className="btn btn-primary btn-sm"
-                    >
-                      <span>View Details</span>
-                      <i className="fas fa-arrow-right"></i>
-                    </Link>
-                  </div>
-                </div>
-                <div className="product-card-info">
-                  <h4>{product.name}</h4>
-                  <p>{product.shortDescription}</p>
-                </div>
-              </motion.div>
-            ))}
+          <div className="gallery-grid">
+            <GalleryItem
+              src="/asserts/images/All-products-together.webp"
+              alt="All D-Wali Products"
+              label="Full Collection"
+              link="/products/full-collection"
+            />
+            <GalleryItem
+              src="/asserts/images/All-products.webp"
+              alt="Product Range"
+              label="Product Range"
+              link="/products/full-collection"
+            />
+            <GalleryItem
+              src="/asserts/images/Dwali-hand-&-Body-Lotion.webp"
+              alt="Anti-Aging Hand & Body Cream"
+              label="Anti-Aging Cream"
+              link="/products/anti-aging-hand-body-cream"
+            />
+            <GalleryItem
+              src="/asserts/images/D-wali-body-lotion.webp"
+              alt="D-Wali Body Lotion"
+              label="Body Lotion"
+              link="/products/anti-aging-hand-body-cream"
+            />
+            <GalleryItem
+              src="/asserts/images/dwali-oil.webp"
+              alt="Anti-Fungal Cuticle & Body Oil"
+              label="Cuticle & Body Oil"
+              link="/products/anti-fungal-cuticle-body-oil"
+            />
+            <GalleryItem
+              src="/asserts/images/dwali-shower-gel.webp"
+              alt="Liquid Gold Shower Gel"
+              label="Shower Gel"
+              link="/products/liquid-gold-shower-gel"
+            />
           </div>
         </motion.div>
       </div>
