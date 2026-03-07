@@ -8,6 +8,7 @@ export const GALLERY_IMAGES = [
   "/asserts/images/Clint-with-product-2.webp",
   "/asserts/images/Clint-with-product-3.webp",
   "/asserts/images/Clint-with-product-4.webp",
+  "/asserts/images/dwaki-customer-showcase.webp",
   "/asserts/images/Clint-with-product-5.webp",
   "/asserts/images/Clint-with-product-6.webp",
   "/asserts/images/Clint-with-product-7.webp",

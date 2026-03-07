@@ -98,7 +98,7 @@ const Contact = () => {
               </div>
               <div className="contact-text">
                 <h4>Call Us</h4>
-                <p>+1 (234) 567-8900</p>
+                <p>+27 73 948 2924</p>
               </div>
             </div>
             <div className="contact-item">
@@ -111,17 +111,14 @@ const Contact = () => {
               </div>
             </div>
             <div className="social-links">
-              <a href="#" className="social-link">
+              <a href="https://www.facebook.com/share/1MrdkCeQh5/?mibextid=wwXIfr" className="social-link" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-facebook-f"></i>
               </a>
-              <a href="#" className="social-link">
+              <a href="https://www.instagram.com/d_wali_cosmetics?igsh=MXhrY3cxcG1mcWNpZA==" className="social-link" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="#" className="social-link">
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="#" className="social-link">
-                <i className="fab fa-linkedin-in"></i>
+              <a href="https://www.tiktok.com/@d.wali.cosmetics?_r=1&_t=ZS-94UF0sTsQmj" className="social-link" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-tiktok"></i>
               </a>
             </div>
           </motion.div>
